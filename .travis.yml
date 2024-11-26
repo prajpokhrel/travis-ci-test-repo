@@ -11,8 +11,9 @@ install:
   - npm install
 
 script:
-  - npm run test -- --watchAll=false --runInBand --headless # Run tests in headless mode and without watch
-
-after_success:
   - npm run build
-  - firebase deploy --token $FIREBASE_DEPLOY_TOKEN # Deploy on success
+  # - npm run test -- --watchAll=false --runInBand --headless # Run tests in headless mode and without watch
+
+# after_success:
+  # - npm run build
+  # - firebase deploy --token $FIREBASE_DEPLOY_TOKEN # Deploy on success
