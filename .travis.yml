@@ -11,9 +11,15 @@ install:
   - npm install
 
 script:
-  - npm run build
-  # - npm run test -- --watchAll=false --runInBand --headless # Run tests in headless mode and without watch
+  - npm run build  # Build your app
 
-# after_success:
-  # - npm run build
-  # - firebase deploy --token $FIREBASE_DEPLOY_TOKEN # Deploy on success
+after_success:
+  - firebase deploy --token $FIREBASE_DEPLOY_TOKEN  # Deploy to Firebase if build is successful
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  script:
+    - firebase deploy --token $FIREBASE_DEPLOY_TOKEN  # Ensure deployment
+  on:
+    branch: main  # Only deploy from the main branch (adjust if you use a different branch)
