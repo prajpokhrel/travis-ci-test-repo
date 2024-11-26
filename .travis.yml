@@ -1,0 +1,32 @@
+language: node_js
+node_js:
+  - "lts/*"
+
+dist: focal
+
+before_install:
+  # Upgrade GCC
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - sudo apt-get update
+  - sudo apt-get install -y gcc-10 g++-10
+  - export CC=gcc-10
+  - export CXX=g++-10
+
+  # Download and build GLIBC
+  - wget http://ftp.gnu.org/gnu/libc/glibc-2.28.tar.gz
+  - tar -xvzf glibc-2.28.tar.gz
+  - cd glibc-2.28
+  - mkdir build
+  - cd build
+  - ../configure --prefix=/opt/glibc-2.28 CFLAGS="-Wno-error"
+  - make -j$(nproc)
+  - sudo make install
+  - cd ../../
+  - export LD_LIBRARY_PATH=/opt/glibc-2.28/lib:$LD_LIBRARY_PATH
+  - export PATH=/opt/glibc-2.28/bin:$PATH
+
+install:
+  - npm ci
+
+script:
+  - npm test
