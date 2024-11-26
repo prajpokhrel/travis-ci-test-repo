@@ -1,7 +1,7 @@
 dist: focal
 language: node_js
 node_js:
-  - "18" # Ensure compatibility with your Node.js version
+  - "lts/*" # Ensure compatibility with your Node.js version
 
 cache:
   directories:
